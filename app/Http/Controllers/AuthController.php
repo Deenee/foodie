@@ -39,6 +39,7 @@ class AuthController extends Controller
 
     public function login()
     {
+        dd('hit');
         $user = User::where('email', request()->email)->first();
         if (!$user) {
             return $this->customResponse('404', 'User not Found');

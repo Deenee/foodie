@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/login', 'FrontAuthController@index');
+Route::post('/login', 'FrontAuthController@login');
