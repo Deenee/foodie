@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Hash;
 use Validator;
 
 class AuthController extends Controller
@@ -23,7 +24,11 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->customResponse('400', 'Validation Failed.', $validator->errors());
             }
-            $user = User::create(request()->all());
+            $user = User::create([
+                'name'=>request()->name,
+                'email'=>request()->email,
+                'password'=>bcrypt(request()->password)
+            ]);
             $user->update(['api_token' => str_random (60)]); // Move this to above query, dont be lazy.
             if (!$user) {
             return $this->customResponse('500', 'User not created. Something went wrong.');
