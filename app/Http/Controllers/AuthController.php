@@ -65,9 +65,9 @@ class AuthController extends Controller
     public function customResponse($code, $message = null, $data = [])
     {
         return response()->json([
-            'responseMessage' => $message ?? 'Here are a list of Vendors.',
-            'responseCode' => $code ?? '200',
-            'data' => $data
+            'responseMessage' => $message ?? '',
+            'responseCode' => $code ?? '',
+            'data' => $data ?? []
         ], 200);
     }
 }
