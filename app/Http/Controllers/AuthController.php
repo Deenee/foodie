@@ -41,10 +41,12 @@ class AuthController extends Controller
     {
         $user = User::where('email', request()->email)->first();
         if (!$user) {
-            return $this->customResponse('404', 'User not Found');
+            Log::info('User not found', ['details'=> request()->all()];
+            return $this->customResponse('400', 'Invalid Credentials');
         }
         if (!Hash::check(request()->password,  $user->password)) {
-            return $this->customResponse('400', 'Passwords do not match.');
+            Log::info('passwords do not match', ['details'=> request()->all()];
+            return $this->customResponse('400', 'Invalid Credentials');
         }
         $user->update(['api_token'=>str_random(60)]);
         return $this->customResponse('200', 'User logged in Successfully', $user);
